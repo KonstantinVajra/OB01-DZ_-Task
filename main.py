@@ -1,79 +1,37 @@
-from datetime import datetime
-
-
 class Task:
-    def __init__(self, description: str, deadline: str):
-        """
-        Инициализация новой задачи
-
-        Args:
-            description: Описание задачи
-            deadline: Срок выполнения в формате 'DD.MM.YYYY'
-        """
+    def __init__(self, description, due_date):
         self.description = description
-        self.deadline = datetime.strptime(deadline, '%d.%m.%Y')
+        self.due_date = due_date
         self.completed = False
 
+    def mark_completed(self):
+        self.completed = True
 
-class TaskManager:
-    def __init__(self):
-        """Инициализация менеджера задач"""
-        self.tasks = []
+def add_task(tasks, description, due_date):
+    tasks.append(Task(description, due_date))
 
-    def add_task(self, description: str, deadline: str) -> None:
-        """
-        Добавление новой задачи
+def show_pending_tasks(tasks):
+    print("Текущие задачи:")
+    for i, task in enumerate(tasks, 1):
+        if not task.completed:
+            print(f"{i}. {task.description} (Срок: {task.due_date})")
 
-        Args:
-            description: Описание задачи
-            deadline: Срок выполнения в формате 'DD.MM.YYYY'
-        """
-        task = Task(description, deadline)
-        self.tasks.append(task)
-        print(f"Задача '{description}' добавлена")
+def mark_task_completed(tasks, index):
+    if 0 <= index < len(tasks):
+        tasks[index].mark_completed()
+    else:
+        print("Некорректный индекс задачи.")
 
-    def mark_completed(self, index: int) -> None:
-        """
-        Отметить задачу как выполненную
+tasks = []
+add_task(tasks,"Выучить урок", "09.11.24")
+add_task(tasks,"Открыть новый урок", "10.11.24")
 
-        Args:
-            index: Индекс задачи в списке (начиная с 1)
-        """
-        if 1 <= index <= len(self.tasks):
-            task = self.tasks[index - 1]
-            task.completed = True
-            print(f"Задача '{task.description}' отмечена как выполненная")
-        else:
-            print("Неверный индекс задачи")
+show_pending_tasks(tasks)
 
-    def show_active_tasks(self) -> None:
-        """Вывести список текущих (невыполненных) задач"""
-        active_tasks = [task for task in self.tasks if not task.completed]
+mark_task_completed(tasks, 0)
 
-        if not active_tasks:
-            print("Нет активных задач")
-            return
-
-        print("\nСписок текущих задач:")
-        for i, task in enumerate(active_tasks, 1):
-            deadline_str = task.deadline.strftime('%d.%m.%Y')
-            print(f"{i}. {task.description} (срок: {deadline_str})")
-
-    # Создаем менеджер задач
+show_pending_tasks(tasks)
 
 
-manager = TaskManager()
 
-# Добавляем несколько задач
-manager.add_task("Подготовить отчет", "15.11.2024")
-manager.add_task("Позвонить клиенту", "10.11.2024")
-manager.add_task("Отправить документы", "12.11.2024")
 
-# Показываем текущие задачи
-manager.show_active_tasks()
-
-# Отмечаем первую задачу как выполненную
-manager.mark_completed(1)
-
-# Снова показываем текущие задачи
-manager.show_active_tasks()
