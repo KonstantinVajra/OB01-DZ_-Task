@@ -58,3 +58,22 @@ class TaskManager:
         for i, task in enumerate(active_tasks, 1):
             deadline_str = task.deadline.strftime('%d.%m.%Y')
             print(f"{i}. {task.description} (срок: {deadline_str})")
+
+    # Создаем менеджер задач
+
+
+manager = TaskManager()
+
+# Добавляем несколько задач
+manager.add_task("Подготовить отчет", "15.11.2024")
+manager.add_task("Позвонить клиенту", "10.11.2024")
+manager.add_task("Отправить документы", "12.11.2024")
+
+# Показываем текущие задачи
+manager.show_active_tasks()
+
+# Отмечаем первую задачу как выполненную
+manager.mark_completed(1)
+
+# Снова показываем текущие задачи
+manager.show_active_tasks()
