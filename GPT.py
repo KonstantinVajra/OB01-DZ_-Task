@@ -1,58 +1,37 @@
 class Task:
     def __init__(self, description, due_date):
-        """Инициализирует задачу с описанием, сроком выполнения и статусом невыполненной."""
         self.description = description
         self.due_date = due_date
-        self.is_completed = False
+        self.completed = False
 
     def mark_completed(self):
-        """Отмечает задачу как выполненную."""
-        self.is_completed = True
+        self.completed = True
 
-    def __str__(self):
-        """Возвращает строковое представление задачи."""
-        status = 'Выполнено' if self.is_completed else 'Не выполнено'
-        return f"Задача: {self.description} | Срок: {self.due_date} | Статус: {status}"
+def add_task(tasks, description, due_date):
+    tasks.append(Task(description, due_date))
 
+def show_pending_tasks(tasks):
+    print("Текущие задачи:")
+    for i, task in enumerate(tasks, 1):
+        if not task.completed:
+            print(f"{i}. {task.description} (Срок: {task.due_date})")
 
-class TaskManager:
-    def __init__(self):
-        """Инициализирует менеджер задач с пустым списком задач."""
-        self.tasks = []
+def mark_task_completed(tasks, index):
+    if 0 <= index < len(tasks):
+        tasks[index].mark_completed()
+    else:
+        print("Некорректный индекс задачи.")
 
-    def add_task(self, description, due_date):
-        """Добавляет новую задачу."""
-        task = Task(description, due_date)
-        self.tasks.append(task)
+tasks = []
+add_task(tasks,"Выучить урок", "09.11.24")
+add_task(tasks,"Открыть новый урок", "10.11.24")
 
-    def mark_task_completed(self, index):
-        """Отмечает задачу по индексу как выполненную."""
-        if 0 <= index < len(self.tasks):
-            self.tasks[index].mark_completed()
-        else:
-            print("Некорректный индекс задачи.")
+show_pending_tasks(tasks)
 
-    def show_pending_tasks(self):
-        """Выводит список текущих (не выполненных) задач."""
-        print("Текущие задачи:")
-        pending_tasks = [task for task in self.tasks if not task.is_completed]
-        if not pending_tasks:
-            print("Нет текущих задач.")
-        else:
-            for i, task in enumerate(pending_tasks, 1):
-                print(f"{i}. {task}")
+mark_task_completed(tasks, 0)
+
+show_pending_tasks(tasks)
 
 
-# Пример использования
-if __name__ == "__main__":
-    manager = TaskManager()
-    manager.add_task("Купить продукты", "2024-11-10")
-    manager.add_task("Закончить проект", "2024-11-15")
 
-    print("До отметки задачи как выполненной:")
-    manager.show_pending_tasks()
 
-    manager.mark_task_completed(0)
-
-    print("\nПосле отметки задачи как выполненной:")
-    manager.show_pending_tasks()
