@@ -26,6 +26,10 @@ class Store:
         else:
             print(f"Товар {item_name} не найден для обновления цены.")
 
+    def list_items(self):
+        """Метод для получения списка всех товаров и их цен."""
+        return self.items
+
 # Пример использования:
 store = Store("My Store", "123 Main St")
 store.add_item("apples", 0.5)
@@ -56,3 +60,4 @@ store3.add_item("agua", 0.6)
 store3.add_item("leche", 2)
 
 store3.remove_item("agua")
+print(store3.list_items())
