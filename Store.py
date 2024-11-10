@@ -51,4 +51,8 @@ print(store2.get_price("pan"))
 store2.update_price("pan", 1.3)
 
 store3 = Store("Bodega", "calle 32")
-store3.add_item("")
+store3.add_item("mahes", 0.02)
+store3.add_item("agua", 0.6)
+store3.add_item("leche", 2)
+
+store3.remove_item("agua")
